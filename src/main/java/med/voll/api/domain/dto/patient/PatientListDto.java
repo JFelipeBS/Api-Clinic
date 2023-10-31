@@ -1,6 +1,6 @@
-package med.voll.api.dto.patirnt;
+package med.voll.api.domain.dto.patient;
 
-import med.voll.api.entities.PatientEntity;
+import med.voll.api.domain.entities.PatientEntity;
 
 public record PatientListDto(
                 Long id,

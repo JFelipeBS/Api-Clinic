@@ -1,7 +1,6 @@
 package med.voll.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,12 +19,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.dto.patirnt.PatientDetailDto;
-import med.voll.api.dto.patirnt.PatientDto;
-import med.voll.api.dto.patirnt.PatientListDto;
-import med.voll.api.dto.patirnt.PatientUpdateDto;
-import med.voll.api.entities.PatientEntity;
-import med.voll.api.repository.PatirntRepository;
+import med.voll.api.domain.dto.patient.PatientDetailDto;
+import med.voll.api.domain.dto.patient.PatientDto;
+import med.voll.api.domain.dto.patient.PatientListDto;
+import med.voll.api.domain.dto.patient.PatientUpdateDto;
+import med.voll.api.domain.entities.PatientEntity;
+import med.voll.api.domain.repository.PatirntRepository;
 
 @RestController
 @RequestMapping("/patient")
@@ -36,16 +35,17 @@ public class PatirntController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<PatientDetailDto> creatPatirnt(@RequestBody @Valid PatientDto data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<PatientDetailDto> creatPatirnt(@RequestBody @Valid PatientDto data,
+            UriComponentsBuilder uriBuilder) {
         PatientEntity patient = new PatientEntity(data);
         repository.save(patient);
         var uri = uriBuilder.path("/patient/{id}").buildAndExpand(patient.getId()).toUri();
-         
+
         return ResponseEntity.created(uri).body(new PatientDetailDto(patient));
     }
 
     @GetMapping
-    public ResponseEntity <List<PatientListDto>> getByAll() {
+    public ResponseEntity<List<PatientListDto>> getByAll() {
         var listPatient = repository.findAll().stream().map(PatientListDto::new).toList();
         return ResponseEntity.ok(listPatient);
     }
@@ -57,16 +57,15 @@ public class PatirntController {
     }
 
     @GetMapping(path = "/pagination")
-    public ResponseEntity <Page<PatientListDto>> getByPagination(@PageableDefault(size = 10, sort = "named") Pageable pagination) {
+    public ResponseEntity<Page<PatientListDto>> getByPagination(
+            @PageableDefault(size = 10, sort = "named") Pageable pagination) {
         var page = repository.findByActiveTrue(pagination).map(PatientListDto::new);
         return ResponseEntity.ok(page);
     }
 
-    
-
     @PutMapping
     @Transactional
-    public ResponseEntity<PatientDetailDto> update(@RequestBody @Valid PatientUpdateDto dto){
+    public ResponseEntity<PatientDetailDto> update(@RequestBody @Valid PatientUpdateDto dto) {
         PatientEntity patient = repository.getReferenceById(dto.id());
         patient.update(dto);
         return ResponseEntity.ok(new PatientDetailDto(patient));
@@ -75,14 +74,14 @@ public class PatirntController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity delete(@PathVariable Long id) {
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("disable/{id}")
     @Transactional
-    public ResponseEntity disble(@PathVariable Long id){
+    public ResponseEntity disble(@PathVariable Long id) {
         PatientEntity patient = repository.getReferenceById(id);
         patient.disable();
         return ResponseEntity.noContent().build();

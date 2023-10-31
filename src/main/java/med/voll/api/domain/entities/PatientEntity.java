@@ -1,4 +1,4 @@
-package med.voll.api.entities;
+package med.voll.api.domain.entities;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -10,8 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.dto.patirnt.PatientDto;
-import med.voll.api.dto.patirnt.PatientUpdateDto;
+import med.voll.api.domain.dto.patient.PatientDto;
+import med.voll.api.domain.dto.patient.PatientUpdateDto;
 
 @Entity(name = "tb_patient")
 @Table

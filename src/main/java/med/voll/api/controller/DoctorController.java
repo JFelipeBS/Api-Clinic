@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.dto.doctor.DoctorDto;
-import med.voll.api.dto.doctor.DoctorListDto;
-import med.voll.api.dto.doctor.DoctorUpdateDto;
-import med.voll.api.entities.DoctorEntity;
-import med.voll.api.repository.DoctorRepository;
+import med.voll.api.domain.dto.doctor.DoctorDto;
+import med.voll.api.domain.dto.doctor.DoctorListDto;
+import med.voll.api.domain.dto.doctor.DoctorUpdateDto;
+import med.voll.api.domain.entities.DoctorEntity;
+import med.voll.api.domain.repository.DoctorRepository;
 
 @RestController
 @RequestMapping("/doctor")
