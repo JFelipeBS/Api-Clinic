@@ -35,17 +35,16 @@ public class PatirntController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<PatientDetailDto> creatPatirnt(@RequestBody @Valid PatientDto data,
-            UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<PatientDetailDto> creatPatirnt(@RequestBody @Valid PatientDto data, UriComponentsBuilder uriBuilder) {
         PatientEntity patient = new PatientEntity(data);
         repository.save(patient);
         var uri = uriBuilder.path("/patient/{id}").buildAndExpand(patient.getId()).toUri();
-
+         
         return ResponseEntity.created(uri).body(new PatientDetailDto(patient));
     }
 
     @GetMapping
-    public ResponseEntity<List<PatientListDto>> getByAll() {
+    public ResponseEntity <List<PatientListDto>> getByAll() {
         var listPatient = repository.findAll().stream().map(PatientListDto::new).toList();
         return ResponseEntity.ok(listPatient);
     }
@@ -57,15 +56,16 @@ public class PatirntController {
     }
 
     @GetMapping(path = "/pagination")
-    public ResponseEntity<Page<PatientListDto>> getByPagination(
-            @PageableDefault(size = 10, sort = "named") Pageable pagination) {
+    public ResponseEntity <Page<PatientListDto>> getByPagination(@PageableDefault(size = 10, sort = "named") Pageable pagination) {
         var page = repository.findByActiveTrue(pagination).map(PatientListDto::new);
         return ResponseEntity.ok(page);
     }
 
+    
+
     @PutMapping
     @Transactional
-    public ResponseEntity<PatientDetailDto> update(@RequestBody @Valid PatientUpdateDto dto) {
+    public ResponseEntity<PatientDetailDto> update(@RequestBody @Valid PatientUpdateDto dto){
         PatientEntity patient = repository.getReferenceById(dto.id());
         patient.update(dto);
         return ResponseEntity.ok(new PatientDetailDto(patient));
@@ -74,14 +74,14 @@ public class PatirntController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable Long id) {
+    public ResponseEntity delete(@PathVariable Long id){
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("disable/{id}")
     @Transactional
-    public ResponseEntity disble(@PathVariable Long id) {
+    public ResponseEntity disble(@PathVariable Long id){
         PatientEntity patient = repository.getReferenceById(id);
         patient.disable();
         return ResponseEntity.noContent().build();
