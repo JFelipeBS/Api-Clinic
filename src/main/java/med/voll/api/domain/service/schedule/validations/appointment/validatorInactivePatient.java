@@ -1,4 +1,4 @@
-package med.voll.api.domain.service.schedule.validations;
+package med.voll.api.domain.service.schedule.validations.appointment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

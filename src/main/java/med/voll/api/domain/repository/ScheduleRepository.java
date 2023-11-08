@@ -8,7 +8,7 @@ import med.voll.api.domain.entities.ScheduleEntity;
 
 public interface ScheduleRepository extends JpaRepository<ScheduleEntity,Long> {
 
-    Boolean existsByDoctorIdAndDate(Long doctor,LocalDateTime date);
+    Boolean existsByDoctorIdAndDateAndReasonCancelIsNull(Long doctor,LocalDateTime date);
 
     Boolean existsByPatientIdAndDateBetween(Long patient, LocalDateTime firstTime, LocalDateTime lasttTime);
     

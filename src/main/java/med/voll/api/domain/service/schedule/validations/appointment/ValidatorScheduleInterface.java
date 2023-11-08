@@ -1,4 +1,4 @@
-package med.voll.api.domain.service.schedule.validations;
+package med.voll.api.domain.service.schedule.validations.appointment;
 
 import med.voll.api.domain.dto.schedule.ScheduleDto;
 

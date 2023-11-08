@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.validation.Valid;
-import med.voll.api.domain.dto.schedule.ScheduleCancel;
 import med.voll.api.domain.dto.schedule.ScheduleDetailDto;
 import med.voll.api.domain.dto.schedule.ScheduleDto;
 import med.voll.api.domain.entities.DoctorEntity;
@@ -15,7 +13,7 @@ import med.voll.api.domain.entities.ScheduleEntity;
 import med.voll.api.domain.repository.DoctorRepository;
 import med.voll.api.domain.repository.PatientRepository;
 import med.voll.api.domain.repository.ScheduleRepository;
-import med.voll.api.domain.service.schedule.validations.ValidatorScheduleInterface;
+import med.voll.api.domain.service.schedule.validations.appointment.ValidatorScheduleInterface;
 import med.voll.api.infra.exceptions.ValidationExeption;
 
 @Service
@@ -69,16 +67,6 @@ public class ScheduleService {
         }
 
         return doctorRepository.chooseDoctorRandomly(data.specialty(), data.date());
-    }
-
-    public void cancel(@Valid ScheduleCancel data) {
-
-        if (!scheduleRepository.existsById(data.idSchedule())) {
-            throw new ValidationExeption("id does not exist");
-        }
-
-        ScheduleEntity schedule = scheduleRepository.getReferenceById(data.idSchedule());
-        schedule.cancel(data.reasonCancel());
     }
 
 }
