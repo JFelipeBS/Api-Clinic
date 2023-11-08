@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import jakarta.persistence.EntityNotFoundException;
 
 @RestControllerAdvice
-public class HandreError {
+public class HandreExeptions {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity handleError404() {
@@ -31,6 +31,13 @@ public class HandreError {
 
             this(erro.getField(), erro.getDefaultMessage());
         }
+    }
+
+    @ExceptionHandler(ValidationExeption.class)
+    public ResponseEntity handleErrorValidationException(ValidationExeption exception) {
+
+        return ResponseEntity.badRequest().body(exception.getMessage());
+
     }
 
 }

@@ -24,14 +24,14 @@ import med.voll.api.domain.dto.patient.PatientDto;
 import med.voll.api.domain.dto.patient.PatientListDto;
 import med.voll.api.domain.dto.patient.PatientUpdateDto;
 import med.voll.api.domain.entities.PatientEntity;
-import med.voll.api.domain.repository.PatirntRepository;
+import med.voll.api.domain.repository.PatientRepository;
 
 @RestController
 @RequestMapping("/patient")
-public class PatirntController {
+public class PatientController {
 
     @Autowired
-    private PatirntRepository repository;
+    private PatientRepository repository;
 
     @PostMapping
     @Transactional
